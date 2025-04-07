@@ -391,12 +391,13 @@ defmodule VelzonWeb.CoreComponents do
   @doc """
   Renders a label.
   """
+  attr :class, :string, default: "block text-sm font-medium leading-6 text-zinc-800"
   attr :for, :string, default: nil
   slot :inner_block, required: true
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class={@class}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -420,7 +421,7 @@ defmodule VelzonWeb.CoreComponents do
   Renders a header with title.
   """
   attr :class, :string, default: nil
-
+  attr :subtitle_class, :string, default: "text-sm leading-6 text-primary"
   slot :inner_block, required: true
   slot :subtitle
   slot :actions
@@ -432,7 +433,7 @@ defmodule VelzonWeb.CoreComponents do
         <h1 class="text-lg font-semibold leading-8 text-zinc-800">
           {render_slot(@inner_block)}
         </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-zinc-600">
+        <p :if={@subtitle != []} class={@subtitle_class}>
           {render_slot(@subtitle)}
         </p>
       </div>

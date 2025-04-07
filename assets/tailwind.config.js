@@ -15,6 +15,13 @@ module.exports = {
     extend: {
       colors: {
         brand: "#FD4F00",
+        headings: "#3d4d83",
+        primary: "#878a99",
+        secondary: "#0ab39c",
+        textcolor: "#495057"
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"]
       }
     },
   },

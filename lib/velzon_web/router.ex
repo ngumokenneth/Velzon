@@ -20,6 +20,12 @@ defmodule VelzonWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/users", VelzonWeb do
+    pipe_through :browser
+
+    live "/register", Users.UserRegistrationLive
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", VelzonWeb do
   #   pipe_through :api
