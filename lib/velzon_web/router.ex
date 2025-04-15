@@ -21,6 +21,8 @@ defmodule VelzonWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/products/step", ProductLive.Index
+
   end
 
   # Other scopes may use custom stacks.

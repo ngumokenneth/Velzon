@@ -10,8 +10,8 @@ defmodule Velzon.Products.ProductMeta do
     timestamps(type: :utc_datetime)
   end
 
-  def changeset(attrs \\ %{}) do
-    %__MODULE__{}
+  def changeset(%__MODULE__{} = product_meta, attrs \\ %{}) do
+    product_meta
     |> cast(attrs, [:title, :keywords, :description])
     |> validate_required([:title, :keywords, :description])
   end

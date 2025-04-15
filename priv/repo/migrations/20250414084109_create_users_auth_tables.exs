@@ -11,7 +11,6 @@ defmodule Velzon.Repo.Migrations.CreateUsersAuthTables do
       add :location, :string, null: false
       add :hashed_password, :string, null: false
       add :confirmed_at, :utc_datetime
-      
 
       timestamps(type: :utc_datetime)
     end

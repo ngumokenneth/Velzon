@@ -12,8 +12,9 @@ defmodule Velzon.Products.ProductInfo do
 
     timestamps(type: :utc_datetime)
   end
-  def changeset(attrs \\ %{}) do
-    %__MODULE__{}
+
+  def changeset(%__MODULE__{} = product_info, attrs \\ %{}) do
+    product_info
     |> cast(attrs, [:manufacturer, :brand, :stocks, :price, :discount, :orders])
     |> validate_required([:manufacturer, :brand, :stocks, :price, :discount, :orders])
   end
