@@ -8,7 +8,7 @@ defmodule Velzon.Repo.Migrations.CreateProductsTable do
       add :product_description, :string
       add :product_meta, :map
       add :product_info, :map
-      add :user_id, references("users", on_delete: :nothing), null: false
+      add :user_id, references("users", on_delete: :nothing), null: true
 
       timestamps(type: :utc_datetime)
     end

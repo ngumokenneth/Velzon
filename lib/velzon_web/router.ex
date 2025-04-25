@@ -21,8 +21,6 @@ defmodule VelzonWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/products/step", ProductLive.Index
-
   end
 
   # Other scopes may use custom stacks.
@@ -70,6 +68,8 @@ defmodule VelzonWeb.Router do
       on_mount: [{VelzonWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/products/step", ProductLive.Index
+      live "/products/steps", ProductLive.Product
     end
   end
 
