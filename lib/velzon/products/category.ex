@@ -15,8 +15,8 @@ defmodule Velzon.Products.Category do
     timestamps(type: :utc_datetime)
   end
 
-  def changeset(attrs \\ %{}) do
-    %__MODULE__{}
+  def changeset(category \\ %__MODULE__{}, attrs \\ %{}) do
+    category
     |> cast(attrs, [:title])
     |> validate_required([:title])
     |> unique_constraint([:title])

@@ -142,14 +142,17 @@ defmodule VelzonWeb.ProductLive.Product do
     form = socket.assigns.form
     user = socket.assigns.current_user
 
-    with {:ok, %{product: product_data}} <- ProductForm.form_submit(form, product_params),
-         {:ok, _product} <- Products.create_product(product_data, user) do
-      socket
-      |> put_flash(:info, "Product created successfully")
-      |> push_navigate(to: ~p"/")
-    else
-      {:error, changeset} ->
-        assign_form(socket, changeset)
+    with {:ok, %{product: product_data}} <- ProductForm.form_submit(form, product_params) do
+      Products.create_product(product_data, user)
+      |> case do
+        {:ok, :created, _product} ->
+          socket
+          |> put_flash(:info, "Product Created successfully")
+          |> push_navigate(to: ~p"/products")
+
+        {:error, :form, changeset} ->
+          assign_form(socket, changeset)
+      end
     end
   end
 

@@ -9,3 +9,7 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+for title <- ["Home Improvement", "Power Tools", "Gardening", "Books", "Education", "Electronics", "Computers", "phones", "clothes", "Kitchen", "cars"] do
+  {:ok, _} = Velzon.Categories.create_category(%{title: title})
+end

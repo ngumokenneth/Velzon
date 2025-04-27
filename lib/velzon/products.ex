@@ -6,30 +6,40 @@ defmodule Velzon.Products do
 
   alias Velzon.Products.Category
   alias Velzon.Products.Product
+  alias Velzon.Accounts.User
 
-  # def create_product(%Product{} = product, attrs) do
-  #   changeset = Product.changeset(product, attrs)
-  #   Repo.insert(changeset)
-  # end
-
-  def create_product(attrs \\ %{}, user) do
+  def create_product(attrs \\ %{}, %User{} = user) do
     %Product{}
-    |> Product.changeset(attrs, user)
+    |> change_product(attrs, user)
     |> Repo.insert()
+    |> case do
+      {:ok, product} -> {:ok, :created, product}
+      {:error, changeset} -> {:error, :form, changeset}
+    end
   end
 
   def get_product!(id) do
     Product |> Repo.get!(id) |> Repo.preload(:categories)
   end
 
-  # def change_product(product \\ %Product{}, attrs \\ %{}) do
-  #   categories = list_categories_by_id(attrs["categories_ids"])
+  def change_product(%Product{} = product, attrs \\ %{}, user) do
+    categories = list_categories_by_id(attrs["categories_ids"])
 
-  #   product
-  #   |> Repo.preload(:categories)
-  #   |> Product.new()
-  #   |> Ecto.Changeset.put_assoc(:categories, categories)
-  # end
+    product
+    |> Repo.preload(:categories)
+    |> Product.changeset(attrs, user)
+    |> Ecto.Changeset.put_assoc(:categories, categories)
+  end
+
+  def update_product(%Product{} = product, attrs, user) do
+    product
+    |> change_product(attrs, user)
+    |> Repo.update()
+    |> case do
+      {:ok, product} -> {:ok, :updated, product}
+      {:error, changeset} -> {:error, :form, changeset}
+    end
+  end
 
   def list_categories_by_id(nil), do: []
 
@@ -44,9 +54,4 @@ defmodule Velzon.Products do
     |> Map.put(:action, :validate)
   end
 
-  # def submit(%Phoenix.HTML.Form{} = form, attrs) do
-  #   form.source.data
-  #   |> create_product(attrs)
-  #   |> Ecto.Changeset.apply_action(:insert)
-  # end
 end
